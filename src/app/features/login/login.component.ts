@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, of } from 'rxjs';
+import { User } from 'src/app/components/models/user';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
-  loggedIn = false;
+  currentUser$: Observable<User | null> = of(null);
 
   constructor(
     public accountService: AccountService,
@@ -18,16 +20,29 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentUser$ = this.accountService.currentUser$;
+  }
 
-  login() {
-    this.accountService.login(this.model).subscribe({
+  getCurrentUser() {
+    this.accountService.currentUser$.subscribe({
       next: (_: any) => {
-        // console.log(response);
-        // this.loggedIn = true;
         this.router.navigateByUrl('/users');
       },
       error: (error: any) => this.toastr.error(error.error),
     });
   }
+  login() {
+    this.accountService.login(this.model).subscribe({
+      next: (_: any) => {
+        this.router.navigateByUrl('/users');
+      },
+      error: (error: any) => this.toastr.error(error.error),
+    });
+  }
+
+  // logout() {
+  //   this.accountService.logout();
+  //   this.router.navigateByUrl('/');
+  // }
 }
