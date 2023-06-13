@@ -1,0 +1,10 @@
+<h4>Internal server error</h4>
+<ng-container *ngIf="error">
+  <p style="font-weight: bold">
+    Following is the stack trace - the first few lines will tell you which line of code caused the
+    issue in the API
+  </p>
+  <code class="mt-5" style="background-color: whitesmoke">
+    {{ error }}
+  </code>
+</ng-container>
