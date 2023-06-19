@@ -3,7 +3,3 @@ export interface Photo {
   url: string | null;
   isMain: boolean;
 }
-
-export interface Profile {
-  photos: Photo[];
-}
