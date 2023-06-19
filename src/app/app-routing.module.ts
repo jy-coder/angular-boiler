@@ -9,13 +9,15 @@ import { RegisterComponent } from './features/register/register.component';
 import { authGuard } from './guards/auth.guard';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { ProductListingComponent } from './features/products/product-listing/product-listing.component';
+import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'error', component: TestErrorComponent },
-  { path: 'server-error', component: ServerErrorComponent },
+  // { path: 'error', component: TestErrorComponent },
+  // { path: 'server-error', component: ServerErrorComponent },
 
   {
     path: '',
@@ -23,7 +25,9 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'users', component: UserListingComponent, canActivate: [authGuard] },
-      { path: 'user/:id', component: UserDetailComponent },
+      { path: 'user/:id', component: UserDetailComponent, canActivate: [authGuard] },
+      { path: 'products', component: ProductListingComponent, canActivate: [authGuard] },
+      { path: 'product/:id', component: ProductDetailComponent, canActivate: [authGuard] },
     ],
   },
   { path: '**', component: NotFoundComponent },

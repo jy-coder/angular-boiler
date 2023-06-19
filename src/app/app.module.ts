@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserDetailComponent } from './features/users/user-detail/user-detail.component';
 import { UserListingComponent } from './features/users/user-listing/user-listing.component';
@@ -16,6 +16,11 @@ import { SharedModule } from './modules/shared.module';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { TableComponent } from './components/table/table.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { TextInputComponent } from './components/text-input/text-input.component';
+import { ProductListingComponent } from './features/products/product-listing/product-listing.component';
+import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,9 +32,24 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     RegisterComponent,
     ServerErrorComponent,
     TestErrorComponent,
+    TableComponent,
+    TextInputComponent,
+    ProductListingComponent,
+    ProductDetailComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, SharedModule],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    SharedModule,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
