@@ -1,0 +1,19 @@
+<table class="table is-fullwidth">
+  <thead>
+    <tr>
+      <th *ngFor="let columnKey of columnKeys">{{ columnKey | titlecase }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let object of objectList">
+      <tr [routerLink]="getRouterLink(object.id)">
+        <td *ngFor="let columnKey of columnKeys">
+          <span>{{ object[columnKey] }}</span>
+        </td>
+        <!-- <td *ngIf="getRouterLink(object) !== null">
+          <a [routerLink]="getRouterLink(object)">View Details</a>
+        </td> -->
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
