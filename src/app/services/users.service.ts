@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../components/models/user';
-import { Observable, map } from 'rxjs';
+import { User } from '../models/user';
+import { Observable, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -9,18 +9,23 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class UsersService {
   baseUrl = environment.apiUrl;
+  users: User[] = [];
 
   constructor(private http: HttpClient) {}
 
-  public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('https://dummyjson.com/users').pipe(
-      map((data: any) => {
-        return data.users.map((user: any) => {
-          return {
-            username: user.username,
-          };
-        });
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'users').pipe(
+      map((users) => {
+        this.users = users;
+        return users;
       })
     );
+  }
+
+  getUser(id: number) {
+    const user = this.users.find((x) => x.id === id);
+    console.log('user: ' + user);
+    if (user) return of(user);
+    return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
 }
