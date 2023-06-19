@@ -1,7 +1,16 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/components/models/user';
+import { Photo } from 'src/app/models/photo';
 import { UsersService } from 'src/app/services/users.service';
+import { getObjectKeys } from 'src/app/utils/helper';
 
+interface User {
+  id: number;
+  userName: string;
+  created: string;
+  photoUrl: string | null;
+  photos: Photo[];
+}
+const user: User = {} as User;
 @Component({
   selector: 'app-user-listing',
   templateUrl: './user-listing.component.html',
@@ -9,6 +18,7 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class UserListingComponent {
   users: User[] = [];
+  userTableColumns: string[] = ['id', 'userName', 'created', 'photoUrl'];
 
   constructor(private userService: UsersService) {}
 

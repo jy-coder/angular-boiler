@@ -1,0 +1,29 @@
+<div class="columns is-centered">
+    <div class="column is-two-fifths is-justify-content-center is-align-items-center">
+      <form [formGroup]="editProductForm" (ngSubmit)="update(product?.id || 0)"  autocomplete="off">
+        <div class="columns is-flex is-flex-direction-column ">
+          <app-text-input
+            [formControl]="$any(editProductForm.controls['description'])"
+            [label]="'description'"
+            [defaultValue]="product?.description"
+          ></app-text-input>
+          <app-text-input
+            [formControl]="$any(editProductForm.controls['price'])"
+            [label]="'price'"
+            [defaultValue]="product?.price"
+          ></app-text-input>
+  
+          <div class="column">
+            <button class="button is-primary is-fullwidth" type="submit">Edit Product</button>
+          </div>
+  
+    
+        </div>
+      </form>
+    </div>
+  </div>
+  <p>form value: {{ editProductForm.value | json }}</p>
+  <p>form status: {{ editProductForm.status | json }}</p>
+  <p>form error: {{ editProductForm.errors | json }}</p>
+  <p>product: {{ product | json }}</p>
+  

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
-import { User } from 'src/app/components/models/user';
+import { AuthUser } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { User } from 'src/app/components/models/user';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
-  currentUser$: Observable<User | null> = of(null);
+  currentUser$: Observable<AuthUser | null> = of(null);
 
   constructor(
     public accountService: AccountService,
