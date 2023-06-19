@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { Pagination } from 'src/app/models/pagination';
 import { Photo } from 'src/app/models/photo';
+import { UserParams } from 'src/app/models/userParams';
 import { UsersService } from 'src/app/services/users.service';
-import { getObjectKeys } from 'src/app/utils/helper';
 
 interface User {
   id: number;
@@ -10,7 +11,7 @@ interface User {
   photoUrl: string | null;
   photos: Photo[];
 }
-const user: User = {} as User;
+
 @Component({
   selector: 'app-user-listing',
   templateUrl: './user-listing.component.html',
@@ -18,14 +19,31 @@ const user: User = {} as User;
 })
 export class UserListingComponent {
   users: User[] = [];
+  pagination: Pagination | undefined;
   userTableColumns: string[] = ['id', 'userName', 'created', 'photoUrl'];
+  userParams: UserParams | undefined;
 
-  constructor(private userService: UsersService) {}
+  constructor(private userService: UsersService) {
+    this.userParams = this.userService.getUserParams();
+  }
 
-  ngOnInit() {
-    this.userService.getUsers().subscribe({
-      next: (users: User[]) => {
-        this.users = users;
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    if (!this.userParams) {
+      return;
+    }
+    this.userService.setUserParams(this.userParams);
+
+    this.userService.getUsers(this.userParams).subscribe({
+      next: (response) => {
+        if (response.result && response.pagination) {
+          this.users = response.result;
+          this.pagination = response.pagination;
+          console.log(this.pagination);
+        }
       },
       error: (error) => {
         console.log('Error:', error);
