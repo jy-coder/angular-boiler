@@ -21,6 +21,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { ProductListingComponent } from './features/products/product-listing/product-listing.component';
 import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { ProductDetailComponent } from './features/products/product-detail/produ
     TextInputComponent,
     ProductListingComponent,
     ProductDetailComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

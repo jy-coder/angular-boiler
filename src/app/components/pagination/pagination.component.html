@@ -1,0 +1,29 @@
+
+<nav class="pagination is-right is-rounded" role="navigation" *ngIf="pagination">
+    <ul class="pagination-list">
+      <li *ngIf="visiblePages[0] > 1">
+        <a class="pagination-link" (click)="pageChanged(1)">First</a>
+      </li>
+      <li *ngIf="visiblePages[0] > 2">
+        <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+      <li *ngFor="let page of visiblePages; let i = index">
+        <a class="pagination-link" [class.is-current]="page === pagination.currentPage" (click)="pageChanged(page)">
+          {{ page }}
+        </a>
+      </li>
+      <li *ngIf="visiblePages[visiblePages.length - 1] < pagination.totalPages - 1">
+        <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+      <li *ngIf="visiblePages[visiblePages.length - 1] < pagination.totalPages">
+        <a class="pagination-link" (click)="pageChanged(pagination.totalPages)">Last</a>
+      </li>
+    </ul>
+   
+  </nav>
+
+   <!-- {{ visiblePages }}
+    {{pagination.currentPage}}
+    {{pagination.totalPages}}
+    {{getVisiblePages(pagination.currentPage, pagination.totalPages)}} -->
+  
