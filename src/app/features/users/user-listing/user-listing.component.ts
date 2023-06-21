@@ -35,6 +35,7 @@ export class UserListingComponent {
     if (!this.userParams) {
       return;
     }
+
     this.userService.setUserParams(this.userParams);
 
     this.userService.getUsers(this.userParams).subscribe({
@@ -42,7 +43,6 @@ export class UserListingComponent {
         if (response.result && response.pagination) {
           this.users = response.result;
           this.pagination = response.pagination;
-          console.log(this.pagination);
         }
       },
       error: (error) => {

@@ -3,5 +3,11 @@
   [objectList]="products"
   [routeName]="'/product/'"
 ></app-table>
-
+<div *ngIf = "pagination">
+  <app-pagination
+    [pagination]="pagination"
+    [params]="productParams"
+    (loadObjects)="loadProducts()"
+  ></app-pagination>
+</div>
 <!-- [objectList]="products$ | async" -->

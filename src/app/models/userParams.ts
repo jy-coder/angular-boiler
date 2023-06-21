@@ -5,3 +5,9 @@ export class UserParams {
   pageSize = 5;
   orderBy = 'created';
 }
+
+export class ProductParams {
+  pageNumber = 1;
+  pageSize = 5;
+  orderBy = 'created';
+}
