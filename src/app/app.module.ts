@@ -22,6 +22,9 @@ import { TextInputComponent } from './components/text-input/text-input.component
 import { ProductListingComponent } from './features/products/product-listing/product-listing.component';
 import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +45,6 @@ import { PaginationComponent } from './components/pagination/pagination.componen
   imports: [
     BrowserModule,
     AppRoutingModule,
-
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -51,6 +53,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
