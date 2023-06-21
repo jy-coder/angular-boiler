@@ -1,9 +1,9 @@
 <app-table
-  [columnKeys]="userTableColumns"
+  [columnKeys]="productTableColumns"
   [objectList]="products"
   [routeName]="'/product/'"
 ></app-table>
-<div *ngIf = "pagination">
+<div *ngIf="pagination">
   <app-pagination
     [pagination]="pagination"
     [params]="productParams"

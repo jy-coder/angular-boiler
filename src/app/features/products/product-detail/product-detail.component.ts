@@ -24,6 +24,7 @@ export class ProductDetailComponent {
 
   ngOnInit(): void {
     this.loadProduct();
+    this.initializeForm();
   }
 
   initializeForm() {
