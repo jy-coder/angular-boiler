@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Category } from 'src/app/models/category';
 import { Pagination } from 'src/app/models/pagination';
 import { Product } from 'src/app/models/product';
 import { ProductParams } from 'src/app/models/userParams';
@@ -15,7 +16,12 @@ export class ProductListingComponent {
   products: Product[] | undefined;
   pagination: Pagination | undefined;
   productParams: ProductParams | undefined;
-  userTableColumns: string[] = ['id', 'description', 'price'];
+  productTableColumns: { key: string; type?: string }[] = [
+    { key: 'id' },
+    { key: 'description' },
+    { key: 'price' },
+    { key: 'categories', type: 'tag' },
+  ];
 
   constructor(private productService: ProductsService) {
     this.productParams = this.productService.getProductParams();
@@ -33,7 +39,12 @@ export class ProductListingComponent {
     this.productService.getProducts(this.productParams).subscribe({
       next: (response) => {
         if (response.result && response.pagination) {
-          this.products = response.result;
+          this.products = response.result.map((product) => {
+            const categoryNames = product.categories.map((category) => category.name);
+            const categories: Category[] = categoryNames.map((name) => ({ name }));
+
+            return { ...product, categories };
+          });
           this.pagination = response.pagination;
         }
       },

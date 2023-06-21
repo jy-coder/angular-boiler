@@ -20,7 +20,12 @@ interface User {
 export class UserListingComponent {
   users: User[] = [];
   pagination: Pagination | undefined;
-  userTableColumns: string[] = ['id', 'userName', 'created', 'photoUrl'];
+  userTableColumns: { key: string; type?: string }[] = [
+    { key: 'id' },
+    { key: 'userName' },
+    { key: 'created' },
+    { key: 'photoUrl' },
+  ];
   userParams: UserParams | undefined;
 
   constructor(private userService: UsersService) {

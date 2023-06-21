@@ -1,3 +1,4 @@
+import { Category } from './category';
 import { Photo } from './photo';
 
 export interface Product {
@@ -7,4 +8,5 @@ export interface Product {
   created: string;
   photoUrl: string;
   photos: Photo[];
+  categories: Category[];
 }
