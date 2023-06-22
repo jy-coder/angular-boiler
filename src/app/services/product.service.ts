@@ -26,8 +26,8 @@ export class ProductsService {
   getProducts(productParams: ProductParams): Observable<PaginatedResult<Product[]>> {
     let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
     params = params.append('orderBy', productParams.orderBy);
-    if (productParams.categoryId) {
-      params = params.append('categoryId', productParams.categoryId);
+    if (productParams.categoryIds) {
+      params = params.append('categoryIds', productParams.categoryIds.join(','));
     }
     return getPaginatedResult<Product[]>(this.baseUrl + 'products', params, this.http).pipe(
       map((response) => {

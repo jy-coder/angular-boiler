@@ -1,8 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Category } from 'src/app/models/category';
-import { ProductParams } from 'src/app/models/userParams';
-import { CategoriesService } from 'src/app/services/category.service';
-import { ProductsService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-dropdown-select',
@@ -17,9 +13,7 @@ export class DropdownSelectComponent {
 
   isSelected = false;
 
-  // constructor() {}
   select(item: any) {
-    console.log('emit select');
     this.selectFn.emit(item);
     this.toggleDropdown();
   }

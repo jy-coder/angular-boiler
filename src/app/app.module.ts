@@ -25,6 +25,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { CategoryListingComponent } from './features/categories/category-listing/category-listing.component';
 import { DropdownSelectComponent } from './components/dropdown-select/dropdown-select.component';
+import { DropdownMultiSelectComponent } from './components/dropdown-multi-select/dropdown-multi-select.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DropdownSelectComponent } from './components/dropdown-select/dropdown-s
     PaginationComponent,
     CategoryListingComponent,
     DropdownSelectComponent,
+    DropdownMultiSelectComponent,
   ],
   imports: [
     BrowserModule,

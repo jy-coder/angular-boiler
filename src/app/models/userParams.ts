@@ -11,8 +11,10 @@ export class ProductParams {
   pageSize = 5;
   orderBy = 'created';
   categoryId?: number;
+  categoryIds?: number[];
 
-  constructor(categoryId?: number) {
+  constructor(categoryId?: number, categoryIds?: number[]) {
     this.categoryId = categoryId;
+    this.categoryIds = categoryIds;
   }
 }
