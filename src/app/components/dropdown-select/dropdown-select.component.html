@@ -1,0 +1,22 @@
+<div class="dropdown" [class.is-active]="isSelected" style="margin-bottom: 30px">
+  <div class="dropdown-trigger">
+    <button class="button" aria-controls="dropdown-menu2" (click)="toggleDropdown()">
+      <span>{{ selectedItem?.name || displayLabel }}</span>
+      <span class="icon is-small">
+        <i class="fa fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+    <div class="dropdown-content">
+      <a
+        class="dropdown-item"
+        *ngFor="let option of options"
+        [class.is-active]="selectedItem?.name === option?.name"
+        (click)="select(option)"
+      >
+        {{ option.name }}
+      </a>
+    </div>
+  </div>
+</div>
