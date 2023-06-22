@@ -22,8 +22,9 @@ import { TextInputComponent } from './components/text-input/text-input.component
 import { ProductListingComponent } from './features/products/product-listing/product-listing.component';
 import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { CategoryListingComponent } from './features/categories/category-listing/category-listing.component';
+import { DropdownSelectComponent } from './components/dropdown-select/dropdown-select.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,8 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
     ProductListingComponent,
     ProductDetailComponent,
     PaginationComponent,
+    CategoryListingComponent,
+    DropdownSelectComponent,
   ],
   imports: [
     BrowserModule,

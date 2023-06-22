@@ -12,7 +12,6 @@ import { ProductsService } from 'src/app/services/product.service';
   styleUrls: ['./product-listing.component.css'],
 })
 export class ProductListingComponent {
-  // products$: Observable<Product[]> | undefined;
   products: Product[] | undefined;
   pagination: Pagination | undefined;
   productParams: ProductParams | undefined;
@@ -28,11 +27,15 @@ export class ProductListingComponent {
   }
 
   ngOnInit() {
+    this.productService.getReloadObservable().subscribe(() => {
+      this.loadProducts();
+    });
+
     this.loadProducts();
-    // this.products$ = this.productService.getProducts();
   }
 
   loadProducts() {
+    this.productParams = this.productService.productParams;
     if (!this.productParams) {
       return;
     }

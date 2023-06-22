@@ -9,6 +9,8 @@ import { AuthUser } from './models/user';
 })
 export class AppComponent {
   title = 'client';
+  isCursorDisabled = false;
+
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {

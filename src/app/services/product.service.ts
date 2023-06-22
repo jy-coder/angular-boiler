@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { Observable, map, of } from 'rxjs';
+import { Observable, Subject, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Product } from '../models/product';
 import { ProductParams, UserParams } from '../models/userParams';
@@ -16,6 +16,7 @@ export class ProductsService {
   products: Product[] = [];
   productParams: ProductParams | undefined;
   paginatedResult: PaginatedResult<Product[]> = new PaginatedResult<Product[]>();
+  private reloadSubject = new Subject<void>();
   productCache = new Map();
 
   constructor(private http: HttpClient) {
@@ -25,6 +26,9 @@ export class ProductsService {
   getProducts(productParams: ProductParams): Observable<PaginatedResult<Product[]>> {
     let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
     params = params.append('orderBy', productParams.orderBy);
+    if (productParams.categoryId) {
+      params = params.append('categoryId', productParams.categoryId);
+    }
     return getPaginatedResult<Product[]>(this.baseUrl + 'products', params, this.http).pipe(
       map((response) => {
         return response;
@@ -39,9 +43,7 @@ export class ProductsService {
   }
 
   editProduct(id: number, model: any) {
-    return this.http
-      .put<Product>(this.baseUrl + 'products/' + id, model)
-      .pipe(map((product) => {}));
+    return this.http.put<Product>(this.baseUrl + 'products/' + id, model);
   }
 
   setProductParams(params: ProductParams) {
@@ -50,5 +52,13 @@ export class ProductsService {
 
   getProductParams() {
     return this.productParams;
+  }
+
+  reloadProducts() {
+    this.reloadSubject.next();
+  }
+
+  getReloadObservable() {
+    return this.reloadSubject.asObservable();
   }
 }
