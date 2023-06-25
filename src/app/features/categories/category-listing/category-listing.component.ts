@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Category } from 'src/app/models/category';
-import { CategoryOptions } from 'src/app/models/options';
+import { CategoryOptions, createCategoryOption } from 'src/app/models/options';
 import { ProductParams } from 'src/app/models/userParams';
 import { CategoriesService } from 'src/app/services/category.service';
 import { ProductsService } from 'src/app/services/product.service';
@@ -15,6 +15,9 @@ export class CategoryListingComponent {
   selectedCategory: any;
   selectedMultiCategory: any;
   isSelected = false;
+  createCategoryOption = createCategoryOption;
+  @Input() reload: boolean = false;
+  @Input() multi: boolean | undefined;
 
   constructor(
     private categoryService: CategoriesService,
@@ -38,6 +41,9 @@ export class CategoryListingComponent {
 
   //single
   selectCategory(category: Category) {
+    if (!this.reload) {
+      return;
+    }
     this.selectedCategory = category;
     const params = new ProductParams(category.id);
     this.productService.productParams = params;
@@ -46,16 +52,11 @@ export class CategoryListingComponent {
 
   // multiple
   selectCategoryOptions(selectedCategoryIds: number[]) {
+    if (!this.reload) {
+      return;
+    }
     const params = new ProductParams(undefined, selectedCategoryIds);
     this.productService.productParams = params;
     this.productService.reloadProducts();
-  }
-
-  createCategoryOption(category: Category, event: Event): CategoryOptions {
-    return {
-      id: category.id || 0,
-      name: category.name,
-      isSelected: (event.target as HTMLInputElement).checked,
-    };
   }
 }
