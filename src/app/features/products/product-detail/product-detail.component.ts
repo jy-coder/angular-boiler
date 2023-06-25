@@ -4,6 +4,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
 import { ProductsService } from 'src/app/services/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { CategoriesService } from 'src/app/services/category.service';
+import { Category } from 'src/app/models/category';
+import { createCategoryOption } from 'src/app/models/options';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,9 +17,16 @@ export class ProductDetailComponent {
   model: any = {};
   product: Product | undefined;
   editProductForm: FormGroup = new FormGroup({});
+  categories: Category[] = [];
+  selectedIds: number[] = [];
+  selectedNames: string[] = [];
+  mappedCategories: Record<number, string> = [];
+  isDataLoaded = false;
+  createCategoryOption = createCategoryOption;
 
   constructor(
     private productService: ProductsService,
+    private categoryService: CategoriesService,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private route: ActivatedRoute
@@ -24,13 +34,14 @@ export class ProductDetailComponent {
 
   ngOnInit(): void {
     this.loadProduct();
-    this.initializeForm();
   }
 
   initializeForm() {
+    // set default value
     this.editProductForm = this.fb.group({
       description: [this.product?.description, Validators.required],
       price: [this.product?.price, Validators.required],
+      categoryIds: [this.selectedIds, Validators.required],
     });
   }
 
@@ -46,7 +57,7 @@ export class ProductDetailComponent {
     this.productService.getProduct(parseInt(id)).subscribe({
       next: (product) => {
         this.product = product;
-        this.initializeForm();
+        this.loadCategories();
       },
     });
   }
@@ -61,8 +72,39 @@ export class ProductDetailComponent {
       },
       error: (error) => {
         this.toastr.error(error.error);
-        console.log(error);
       },
     });
+  }
+
+  submitForm() {
+    if (this.editProductForm.valid) {
+      this.update(this.product?.id || 0);
+    }
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+        this.mappedCategories = categories.reduce((result, item) => {
+          result[item.id || 0] = item.name;
+          return result;
+        }, {} as Record<number, string>);
+
+        this.selectedIds = this.product?.categories?.map((c) => c.id) as number[];
+        this.selectedNames = this.selectedIds?.map((id) => this.mappedCategories[id]);
+        this.initializeForm();
+        this.isDataLoaded = true;
+      },
+      error: (error) => {
+        console.log('Error:', error);
+      },
+    });
+  }
+
+  selectCategoryOptions(selectedCategoryIds: number[]) {
+    this.selectedIds = selectedCategoryIds;
+    this.selectedNames = selectedCategoryIds.map((id) => this.mappedCategories[id]);
+    this.editProductForm?.controls['categoryIds']?.setValue(selectedCategoryIds);
   }
 }
