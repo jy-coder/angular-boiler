@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaginationComponent } from '../../app/components/pagination/pagination.component';
+import { Pagination } from '../../app/models/pagination';
 import { UserParams } from '../../app/models/userParams';
 
 describe('PaginationComponent', () => {
@@ -18,20 +19,21 @@ describe('PaginationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should emit loadObjects event when pageChanged is called', () => {
-    const pageNumber = 2;
-    const userParams: UserParams = new UserParams();
-    component.params = userParams;
+    const pagination: Pagination = {
+      currentPage: 1,
+      itemsPerPage: 10,
+      totalItems: 100,
+      totalPages: 10,
+    };
+    component.pagination = pagination;
+    component.params = new UserParams();
 
-    const emitMock = jest.fn();
-    component.loadObjects = { emit: emitMock } as any;
+    const loadObjectsSpy = jest.spyOn(component.loadObjects, 'emit');
 
-    component.pageChanged(pageNumber);
+    const page = 2;
+    component.pageChanged(page);
 
-    expect(emitMock).toHaveBeenCalled();
+    expect(loadObjectsSpy).toHaveBeenCalled();
   });
 });

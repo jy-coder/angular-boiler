@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
 import { Pagination } from 'src/app/models/pagination';
-import { Photo } from 'src/app/models/photo';
+import { User } from 'src/app/models/user';
 import { UserParams } from 'src/app/models/userParams';
-import { UsersService } from 'src/app/services/users.service';
-
-interface User {
-  id: number;
-  userName: string;
-  created: string;
-  photoUrl: string | null;
-  photos: Photo[];
-}
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-user-listing',
