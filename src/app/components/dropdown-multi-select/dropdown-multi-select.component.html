@@ -28,7 +28,7 @@
         *ngFor="let option of options"
         (change)="toggleSelection(createOptions(option, $event))"
       >
-        <input type="checkbox" />
+        <input type="checkbox" [checked]="selectedIds && selectedIds.includes(option.id)" />
         {{ option.name }}
       </a>
       <a class="dropdown-item has-text-centered has-text-link" (click)="reset()">CLEAR</a>

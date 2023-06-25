@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { Option } from 'src/app/models/options';
+import { Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-dropdown-multi-select',
@@ -11,14 +12,11 @@ export class DropdownMultiSelectComponent {
   @Output() selectFn: EventEmitter<any> = new EventEmitter<void>();
   @Input() displayLabel: string | undefined;
   @Input() createOptions: Function = () => {};
-  selectedIds: number[] = [];
-  selectedName: string[] = [];
+  @Input() selectedIds: number[] = [];
+  @Input() selectedName: string[] = [];
   isSelected: boolean = false;
 
-  select(item: any) {
-    this.selectFn.emit(item);
-    this.toggleDropdown();
-  }
+  constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 
   toggleDropdown() {
     this.isSelected = !this.isSelected;
@@ -51,5 +49,21 @@ export class DropdownMultiSelectComponent {
         isSelected: false,
       };
     });
+  }
+  dropdownClicked(event: MouseEvent): boolean {
+    const dropdownTrigger = this.elementRef.nativeElement.querySelector('.dropdown-trigger');
+    const dropdownMenu = this.elementRef.nativeElement.querySelector('.dropdown-menu');
+
+    return (
+      (dropdownTrigger && dropdownTrigger.contains(event.target)) ||
+      (dropdownMenu && dropdownMenu.contains(event.target))
+    );
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.dropdownClicked(event)) {
+      this.isSelected = false;
+    }
   }
 }

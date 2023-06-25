@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Option } from 'src/app/models/options';
 
 @Component({
   selector: 'app-dropdown-select',
@@ -13,7 +14,7 @@ export class DropdownSelectComponent {
 
   isSelected = false;
 
-  select(item: any) {
+  select(item: Option) {
     this.selectFn.emit(item);
     this.toggleDropdown();
   }
