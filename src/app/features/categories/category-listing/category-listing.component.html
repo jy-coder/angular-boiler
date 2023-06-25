@@ -1,0 +1,16 @@
+<ng-container *ngIf="!multi">
+  <app-dropdown-select
+    [options]="categories"
+    [selectedItem]="selectedCategory"
+    (selectFn)="selectCategory($event)"
+    [displayLabel]="'Select Category'"
+  ></app-dropdown-select>
+</ng-container>
+<ng-container *ngIf="multi">
+  <app-dropdown-multi-select
+    [options]="categories"
+    (selectFn)="selectCategoryOptions($event)"
+    [createOptions]="createCategoryOption"
+    [displayLabel]="'Select Category'"
+  ></app-dropdown-multi-select>
+</ng-container>

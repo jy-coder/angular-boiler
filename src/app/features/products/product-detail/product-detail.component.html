@@ -1,7 +1,8 @@
-<div class="columns is-centered">
+<ng-container *ngIf="isDataLoaded">
+  <div class="columns is-centered">
     <div class="column is-two-fifths is-justify-content-center is-align-items-center">
-      <form [formGroup]="editProductForm" (ngSubmit)="update(product?.id || 0)"  autocomplete="off">
-        <div class="columns is-flex is-flex-direction-column ">
+      <form [formGroup]="editProductForm" autocomplete="off">
+        <div class="columns is-flex is-flex-direction-column">
           <app-text-input
             [formControl]="$any(editProductForm.controls['description'])"
             [label]="'description'"
@@ -12,18 +13,32 @@
             [label]="'price'"
             [defaultValue]="product?.price"
           ></app-text-input>
-  
-          <div class="column">
-            <button class="button is-primary is-fullwidth" type="submit">Edit Product</button>
+          <div class="ml-3">
+            <app-dropdown-multi-select
+              [options]="categories"
+              [createOptions]="createCategoryOption"
+              [displayLabel]="'Select Category'"
+              [selectedIds]="selectedIds"
+              [selectedName]="selectedNames"
+              (selectFn)="selectCategoryOptions($event)"
+            ></app-dropdown-multi-select>
           </div>
-  
-    
+
+          <div class="column">
+            <button class="button is-primary is-fullwidth" type="submit" (click)="submitForm()">
+              Edit Product
+            </button>
+          </div>
         </div>
       </form>
     </div>
   </div>
-  <p>form value: {{ editProductForm.value | json }}</p>
+  <!-- <p>form value: {{ editProductForm.value | json }}</p>
+  <p>{{ selectedIds }}</p>
+  <p>{{ selectedNames }}</p> -->
+
+  <!-- <p>form value: {{ editProductForm.value | json }}</p>
   <p>form status: {{ editProductForm.status | json }}</p>
   <p>form error: {{ editProductForm.errors | json }}</p>
-  <p>product: {{ product | json }}</p>
-  
+  <p>product: {{ product | json }}</p> -->
+</ng-container>

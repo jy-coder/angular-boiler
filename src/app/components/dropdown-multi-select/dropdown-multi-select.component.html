@@ -1,0 +1,37 @@
+<div class="dropdown" [class.is-active]="isSelected">
+  <div class="dropdown-trigger">
+    <button
+      class="button"
+      aria-haspopup="true"
+      aria-controls="dropdown-menu"
+      (click)="toggleDropdown()"
+    >
+      <ng-container *ngIf="selectedName && selectedName.length > 0">
+        <span class="tag mr-2" *ngFor="let tagName of selectedName">
+          {{ tagName }}
+        </span>
+      </ng-container>
+
+      <ng-container *ngIf="selectedName && selectedName.length == 0">
+        {{ displayLabel }}
+      </ng-container>
+
+      <span class="icon is-small">
+        <i class="fa fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+    <div class="dropdown-content dropdown-content-height">
+      <a
+        class="dropdown-item"
+        *ngFor="let option of options"
+        (change)="toggleSelection(createOptions(option, $event))"
+      >
+        <input type="checkbox" [checked]="selectedIds && selectedIds.includes(option.id)" />
+        {{ option.name }}
+      </a>
+      <a class="dropdown-item has-text-centered has-text-link" (click)="reset()">CLEAR</a>
+    </div>
+  </div>
+</div>

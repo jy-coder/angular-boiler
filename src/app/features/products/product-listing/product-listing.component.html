@@ -1,7 +1,13 @@
+<app-category-listing [multi]="true" [reload]="true" />
 <app-table
-  [columnKeys]="userTableColumns"
+  [columnKeys]="productTableColumns"
   [objectList]="products"
   [routeName]="'/product/'"
 ></app-table>
-
-<!-- [objectList]="products$ | async" -->
+<div *ngIf="pagination">
+  <app-pagination
+    [pagination]="pagination"
+    [params]="productParams"
+    (loadObjects)="loadProducts()"
+  ></app-pagination>
+</div>

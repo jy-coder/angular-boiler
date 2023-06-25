@@ -22,6 +22,11 @@ import { TextInputComponent } from './components/text-input/text-input.component
 import { ProductListingComponent } from './features/products/product-listing/product-listing.component';
 import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { CategoryListingComponent } from './features/categories/category-listing/category-listing.component';
+import { DropdownSelectComponent } from './components/dropdown-select/dropdown-select.component';
+import { DropdownMultiSelectComponent } from './components/dropdown-multi-select/dropdown-multi-select.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,11 +43,13 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     ProductListingComponent,
     ProductDetailComponent,
     PaginationComponent,
+    CategoryListingComponent,
+    DropdownSelectComponent,
+    DropdownMultiSelectComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -51,6 +58,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

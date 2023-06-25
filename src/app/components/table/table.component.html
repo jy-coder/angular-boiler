@@ -1,18 +1,24 @@
 <table class="table is-fullwidth">
   <thead>
     <tr>
-      <th *ngFor="let columnKey of columnKeys">{{ columnKey | titlecase }}</th>
+      <th *ngFor="let columnKey of columnKeys">{{ columnKey['key'] | titlecase }}</th>
     </tr>
   </thead>
   <tbody>
     <ng-container *ngFor="let object of objectList">
       <tr [routerLink]="getRouterLink(object.id)">
         <td *ngFor="let columnKey of columnKeys">
-          <span>{{ object[columnKey] }}</span>
+          <ng-container *ngIf="columnKey['type'] !== 'tag'">
+            <span>{{ object[columnKey['key']] }}</span>
+          </ng-container>
+          <ng-container *ngIf="columnKey['type'] === 'tag'">
+            <span *ngFor="let tagObj of object[columnKey['key']]">
+              <span class="tag mr-2" *ngFor="let key of getObjectKeys(tagObj)">{{
+                tagObj[key]
+              }}</span>
+            </span>
+          </ng-container>
         </td>
-        <!-- <td *ngIf="getRouterLink(object) !== null">
-          <a [routerLink]="getRouterLink(object)">View Details</a>
-        </td> -->
       </tr>
     </ng-container>
   </tbody>

@@ -20,7 +20,12 @@ interface User {
 export class UserListingComponent {
   users: User[] = [];
   pagination: Pagination | undefined;
-  userTableColumns: string[] = ['id', 'userName', 'created', 'photoUrl'];
+  userTableColumns: { key: string; type?: string }[] = [
+    { key: 'id' },
+    { key: 'userName' },
+    { key: 'created' },
+    { key: 'photoUrl' },
+  ];
   userParams: UserParams | undefined;
 
   constructor(private userService: UsersService) {
@@ -35,6 +40,7 @@ export class UserListingComponent {
     if (!this.userParams) {
       return;
     }
+
     this.userService.setUserParams(this.userParams);
 
     this.userService.getUsers(this.userParams).subscribe({
@@ -42,7 +48,6 @@ export class UserListingComponent {
         if (response.result && response.pagination) {
           this.users = response.result;
           this.pagination = response.pagination;
-          console.log(this.pagination);
         }
       },
       error: (error) => {
