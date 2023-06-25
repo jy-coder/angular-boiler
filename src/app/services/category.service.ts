@@ -1,27 +1,30 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/user';
-import { Observable, map, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Category } from '../models/category';
-import { PaginatedResult } from '../models/pagination';
-import { getPaginatedResult, getPaginationHeaders } from '../utils/paginationHelper';
+import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriesService {
   baseUrl = environment.apiUrl;
-  categories: Category[] = [];
-  categoryCache = new Map();
+  private cacheKey = 'categories';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cacheService: CacheService) {}
 
   getCategories(): Observable<Category[]> {
     const url = this.baseUrl + 'categories';
+
+    const cachedCategories = this.cacheService.get<Category[]>(this.cacheKey);
+    if (cachedCategories) {
+      return of(cachedCategories);
+    }
+
     return this.http.get<Category[]>(url).pipe(
-      map((categories) => {
-        this.categories = categories;
+      tap((categories) => {
+        this.cacheService.set(this.cacheKey, categories);
         return categories;
       })
     );

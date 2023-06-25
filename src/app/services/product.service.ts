@@ -7,6 +7,7 @@ import { Product } from '../models/product';
 import { ProductParams, UserParams } from '../models/userParams';
 import { PaginatedResult } from '../models/pagination';
 import { getPaginatedResult, getPaginationHeaders } from '../utils/paginationHelper';
+import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,20 @@ export class ProductsService {
   paginatedResult: PaginatedResult<Product[]> = new PaginatedResult<Product[]>();
   private reloadSubject = new Subject<void>();
   productCache = new Map();
+  private cacheKey = 'products';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cacheService: CacheService) {
     this.productParams = new ProductParams();
   }
 
   getProducts(productParams: ProductParams): Observable<PaginatedResult<Product[]>> {
+    const cachedProductKey = `${this.cacheKey}- ` + JSON.stringify(productParams);
+    const cachedProductData = this.cacheService.get(cachedProductKey);
+
+    if (cachedProductData) {
+      return of(cachedProductData);
+    }
+
     let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
     params = params.append('orderBy', productParams.orderBy);
     if (productParams.categoryIds) {
@@ -31,6 +40,7 @@ export class ProductsService {
     }
     return getPaginatedResult<Product[]>(this.baseUrl + 'products', params, this.http).pipe(
       map((response) => {
+        this.cacheService.set(cachedProductKey, response);
         return response;
       })
     );
