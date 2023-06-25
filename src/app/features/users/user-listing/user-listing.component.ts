@@ -24,7 +24,6 @@ export class UserListingComponent {
     { key: 'id' },
     { key: 'userName' },
     { key: 'created' },
-    { key: 'photoUrl' },
   ];
   userParams: UserParams | undefined;
 

@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CategoriesService } from 'src/app/services/category.service';
 import { Category } from 'src/app/models/category';
 import { createCategoryOption } from 'src/app/models/options';
+import { CacheService } from 'src/app/services/cache.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -27,6 +28,7 @@ export class ProductDetailComponent {
   constructor(
     private productService: ProductsService,
     private categoryService: CategoriesService,
+    private cacheService: CacheService,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private route: ActivatedRoute
@@ -69,6 +71,7 @@ export class ProductDetailComponent {
     this.productService.editProduct(id, this.editProductForm.value).subscribe({
       next: () => {
         this.toastr.success('Successfully edit');
+        this.cacheService.clearKey('products');
       },
       error: (error) => {
         this.toastr.error(error.error);

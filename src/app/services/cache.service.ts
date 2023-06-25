@@ -31,12 +31,12 @@ export class CacheService implements OnDestroy {
     this.cache.set(key, { data, expiration });
   }
 
-  clearKey(key: string): void {
-    this.cache.delete(key);
-  }
-
-  clear(): void {
-    this.cache.clear();
+  clearKey(prefix: string): void {
+    this.cache.forEach((_, key) => {
+      if (key.startsWith(prefix)) {
+        this.cache.delete(key);
+      }
+    });
   }
 
   ngOnDestroy(): void {
