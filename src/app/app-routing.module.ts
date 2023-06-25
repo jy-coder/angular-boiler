@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
-import { HomeComponent } from './features/home/home.component';
 import { UserDetailComponent } from './features/users/user-detail/user-detail.component';
 import { UserListingComponent } from './features/users/user-listing/user-listing.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
@@ -13,7 +12,7 @@ import { ProductListingComponent } from './features/products/product-listing/pro
 import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'products', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   // { path: 'error', component: TestErrorComponent },
