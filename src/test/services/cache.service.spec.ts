@@ -40,7 +40,7 @@ describe('CacheService', () => {
 
     expect(cacheEntry?.data).toEqual(data);
     expect(cacheEntry?.expiration).toBeInstanceOf(Date);
-    expect(cacheEntry?.expiration.getMinutes()).toBeGreaterThan(new Date().getMinutes());
+    expect(cacheEntry?.expiration.getTime()).toBeGreaterThan(new Date().getTime());
   });
 
   it('should set data in cache with custom expiration', () => {

@@ -39,6 +39,10 @@ export class CacheService implements OnDestroy {
     });
   }
 
+  clear(): void {
+    this.cache.clear();
+  }
+
   ngOnDestroy(): void {
     this.stopCleanupTimer();
   }
