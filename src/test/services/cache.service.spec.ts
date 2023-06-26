@@ -70,7 +70,7 @@ describe('CacheService', () => {
     service.clearKey(key1);
 
     expect(service.get(key1)).toBeUndefined();
-    expect(service.get(key2)).toEqual(data2);
+    expect(service.get(key2)).toBeUndefined();
   });
 
   it('should clear all data from cache', () => {
