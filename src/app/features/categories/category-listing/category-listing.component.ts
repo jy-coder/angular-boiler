@@ -16,7 +16,7 @@ export class CategoryListingComponent {
   selectedMultiCategory: any;
   isSelected = false;
   createCategoryOption = createCategoryOption;
-  @Input() reload: boolean = false;
+  @Input() reload = false;
   @Input() multi: boolean | undefined;
 
   constructor(

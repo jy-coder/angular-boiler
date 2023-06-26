@@ -1,7 +1,9 @@
 <nav class="pagination is-right is-small" role="navigation" *ngIf="pagination">
   <ul class="pagination-list">
     <li *ngFor="let page of visiblePages; let i = index">
+      
       <a
+        aria-hidden="true"
         class="pagination-link"
         [class.is-current]="page === pagination.currentPage"
         (click)="pageChanged(page)"

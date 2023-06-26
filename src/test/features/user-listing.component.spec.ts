@@ -15,8 +15,8 @@ import { Component, Input } from '@angular/core';
 // prevent the UserListingComponent from binding to the app-table component during testing
 class MockAppTableComponent {
   @Input() columnKeys: { key: string; type?: string }[] = [];
-  @Input() routeName: string = '';
-  @Input() objectList: any = [];
+  @Input() routeName = '';
+  @Input() objectList = [];
 }
 
 describe('UserListingComponent', () => {

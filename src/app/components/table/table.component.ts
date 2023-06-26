@@ -7,13 +7,9 @@ import { getObjectKeys } from 'src/app/utils/helper';
 })
 export class TableComponent<T> {
   @Input() columnKeys: { key: string; type?: string }[] = [];
-  @Input() objectList: any = [];
-  @Input() routeName: string = '';
+  @Input() objectList = [];
+  @Input() routeName = '';
   getObjectKeys = getObjectKeys;
-
-  constructor() {}
-
-  ngOnInit() {}
 
   getRouterLink(param: string): string {
     return this.routeName + param;

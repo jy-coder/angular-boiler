@@ -11,10 +11,10 @@ export class DropdownMultiSelectComponent {
   @Input() options: any[] | undefined;
   @Output() selectFn: EventEmitter<any> = new EventEmitter<void>();
   @Input() displayLabel: string | undefined;
-  @Input() createOptions: Function = () => {};
+  @Input() createOptions: any;
   @Input() selectedIds: number[] = [];
   @Input() selectedName: string[] = [];
-  isSelected: boolean = false;
+  isSelected = false;
 
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 

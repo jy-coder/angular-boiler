@@ -11,6 +11,7 @@
     <div class="dropdown-content">
       <a
         class="dropdown-item"
+        aria-hidden="true"
         *ngFor="let option of options"
         [class.is-active]="selectedItem?.name === option?.name"
         (click)="select(option)"

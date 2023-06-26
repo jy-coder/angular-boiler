@@ -6,13 +6,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './test-error.component.html',
   styleUrls: ['./test-error.component.css'],
 })
-export class TestErrorComponent implements OnInit {
+export class TestErrorComponent {
   baseUrl = 'https://localhost:5001/api/';
   validationErrors: string[] = [];
 
   constructor(private http: HttpClient) {}
-
-  ngOnInit(): void {}
 
   get404Error() {
     this.http.get(this.baseUrl + 'buggy/not-found').subscribe({

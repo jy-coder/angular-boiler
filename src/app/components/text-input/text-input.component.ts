@@ -21,8 +21,10 @@ export class TextInputComponent implements ControlValueAccessor {
     }
   }
 
+  // eslint-disable-next-line
   registerOnChange(fn: any): void {}
 
+  // eslint-disable-next-line
   registerOnTouched(fn: any): void {}
 
   get control(): FormControl {

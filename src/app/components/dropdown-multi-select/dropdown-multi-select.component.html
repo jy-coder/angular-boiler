@@ -12,7 +12,7 @@
         </span>
       </ng-container>
 
-      <ng-container *ngIf="selectedName && selectedName.length == 0">
+      <ng-container *ngIf="selectedName && selectedName.length === 0">
         {{ displayLabel }}
       </ng-container>
 
@@ -31,7 +31,8 @@
         <input type="checkbox" [checked]="selectedIds && selectedIds.includes(option.id)" />
         {{ option.name }}
       </a>
-      <a class="dropdown-item has-text-centered has-text-link" (click)="reset()">CLEAR</a>
+
+      <a class="dropdown-item has-text-centered has-text-link" (click)="reset()" aria-hidden="true">CLEAR</a>
     </div>
   </div>
 </div>
