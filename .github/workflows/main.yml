@@ -27,4 +27,4 @@ jobs:
         if: ${{ steps.test.outcome == 'success' && steps.lint.outcome == 'success' }}
         run: |
           git checkout master
-          git merge test
+          git push origin master
