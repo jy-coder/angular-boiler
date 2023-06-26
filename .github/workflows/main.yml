@@ -23,8 +23,17 @@ jobs:
         id: lint
         run: npm run lint
 
-      - name: Merge to Master
-        if: ${{ steps.test.outcome == 'success' && steps.lint.outcome == 'success' }}
+  Deploy:
+    needs: [Jest]
+    runs-on: ubuntu-latest
+    if: ${{ needs.Jest.result == 'success' && needs.lint.result == 'success' }}
+    steps:
+      - name: Checkout Master
+        uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Push to Master
         run: |
           git checkout master
           git push origin master
