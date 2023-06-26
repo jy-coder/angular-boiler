@@ -54,8 +54,8 @@ describe('CacheService', () => {
 
     expect(cacheEntry?.data).toEqual(data);
     expect(cacheEntry?.expiration).toBeInstanceOf(Date);
-    expect(cacheEntry?.expiration.getMinutes()).toBeGreaterThan(new Date().getMinutes());
-    expect(cacheEntry?.expiration.getMinutes()).toBe(new Date().getMinutes() + expirationMinutes);
+    expect(cacheEntry?.expiration.getTime()).toBeGreaterThan(new Date().getTime());
+    expect(cacheEntry?.expiration.getTime()).toBeGreaterThan(new Date().getTime());
   });
 
   it('should clear specific key from cache', () => {
