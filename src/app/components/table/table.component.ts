@@ -7,7 +7,7 @@ import { getObjectKeys } from 'src/app/utils/helper';
 })
 export class TableComponent<T> {
   @Input() columnKeys: { key: string; type?: string }[] = [];
-  @Input() objectList = [];
+  @Input() objectList: any = [];
   @Input() routeName = '';
   getObjectKeys = getObjectKeys;
 
