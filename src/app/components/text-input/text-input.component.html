@@ -8,17 +8,19 @@
     value="{{ defaultValue }}"
 
   />
-  <p *ngIf="control.errors?.['required'] && control.touched" class="help is-danger">
-    This {{ label }} is invalid
-  </p>
-  <p *ngIf="control.errors?.['minlength'] && control.touched" class="help is-danger">
-    {{ label }} must be at most {{control.errors?.['minlength'].requiredLength}} characters
-  </p>
+  <ng-container *ngIf="control?.errors && control.touched">   
+     <p *ngIf="control.errors?.['required']" class="help is-danger">
+      This {{ label }} is invalid
+    </p>
+    <p *ngIf="control.errors?.['minlength']" class="help is-danger">
+      {{ label }} must be at most {{control.errors?.['minlength'].requiredLength}} characters
+    </p>
 
-  <p *ngIf="control.errors?.['maxlength'] && control.touched" class="help is-danger">
-    {{ label }} must be at most {{control.errors?.['maxlength'].requiredLength}} characters
-  </p>
-  <p *ngIf="control.errors?.['notMatching'] && control.touched" class="help is-danger">
-    Passwords do not match
-  </p>
+    <p *ngIf="control.errors?.['maxlength']" class="help is-danger">
+      {{ label }} must be at most {{control.errors?.['maxlength'].requiredLength}} characters
+    </p>
+    <p *ngIf="control.errors?.['notMatching']" class="help is-danger">
+      Passwords do not match
+    </p>
+</ng-container>
 </div>
