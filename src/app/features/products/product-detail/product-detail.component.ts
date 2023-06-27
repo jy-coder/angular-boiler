@@ -8,6 +8,7 @@ import { CategoriesService } from 'src/app/services/category.service';
 import { Category } from 'src/app/models/category';
 import { createCategoryOption } from 'src/app/models/options';
 import { CacheService } from 'src/app/services/cache.service';
+import { numberArrayValidator, pricePattern } from 'src/app/utils/validator';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,7 +16,7 @@ import { CacheService } from 'src/app/services/cache.service';
   styleUrls: ['./product-detail.component.css'],
 })
 export class ProductDetailComponent implements OnInit {
-  model: any = {};
+  model: Product | undefined;
   product: Product | undefined;
   editProductForm: FormGroup = new FormGroup({});
   categories: Category[] = [];
@@ -41,10 +42,10 @@ export class ProductDetailComponent implements OnInit {
   initializeForm() {
     // set default value
     this.editProductForm = this.fb.group({
-      name: [this.product?.name, Validators.required],
-      description: [this.product?.description, Validators.required],
-      price: [this.product?.price, Validators.required],
-      categoryIds: [this.selectedIds, Validators.required],
+      name: [this.product?.name, Validators.required, Validators.maxLength(30)],
+      description: [this.product?.description, Validators.required, Validators.maxLength(100)],
+      price: [this.product?.price, Validators.required, Validators.pattern(pricePattern)],
+      categoryIds: [this.selectedIds, Validators.required, numberArrayValidator],
     });
   }
 

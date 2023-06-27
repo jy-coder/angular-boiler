@@ -10,6 +10,7 @@ import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { ProductListingComponent } from './features/products/product-listing/product-listing.component';
 import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
+import { ProductCreateComponent } from './features/products/product-create/product-create.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'users', component: UserListingComponent, canActivate: [authGuard] },
       { path: 'user/:id', component: UserDetailComponent, canActivate: [authGuard] },
       { path: 'products', component: ProductListingComponent, canActivate: [authGuard] },
+      { path: 'product/create', component: ProductCreateComponent, canActivate: [authGuard] },
       { path: 'product/:id', component: ProductDetailComponent, canActivate: [authGuard] },
     ],
   },

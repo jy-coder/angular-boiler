@@ -1,4 +1,15 @@
-<app-category-listing [multi]="true" [reload]="true" />
+<div>
+  <div class="columns">
+    <div class="column">
+      <app-category-listing [multi]="true" [reload]="true"></app-category-listing>
+    </div>
+    <div class="column is-narrow">
+      <a routerLink="/product/create">Create</a>
+
+    </div>
+  </div>
+</div>
+
 <app-table
   [columnKeys]="productTableColumns"
   [objectList]="products"

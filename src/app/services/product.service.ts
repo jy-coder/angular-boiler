@@ -52,8 +52,12 @@ export class ProductsService {
     return this.http.get<Product>(this.baseUrl + 'products/' + id);
   }
 
-  editProduct(id: number, model: any) {
+  editProduct(id: number, model: Product) {
     return this.http.put<Product>(this.baseUrl + 'products/' + id, model);
+  }
+
+  createProduct(model: Product) {
+    return this.http.post<Product>(this.baseUrl + 'products', model);
   }
 
   setProductParams(params: ProductParams) {

@@ -26,6 +26,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { CategoryListingComponent } from './features/categories/category-listing/category-listing.component';
 import { DropdownSelectComponent } from './components/dropdown-select/dropdown-select.component';
 import { DropdownMultiSelectComponent } from './components/dropdown-multi-select/dropdown-multi-select.component';
+import { ProductCreateComponent } from './features/products/product-create/product-create.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { DropdownMultiSelectComponent } from './components/dropdown-multi-select
     CategoryListingComponent,
     DropdownSelectComponent,
     DropdownMultiSelectComponent,
+    ProductCreateComponent,
   ],
   imports: [
     BrowserModule,

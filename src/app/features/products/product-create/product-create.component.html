@@ -1,0 +1,35 @@
+    <div class="columns is-centered">
+      <div class="column is-two-fifths is-justify-content-center is-align-items-center">
+        <form [formGroup]="createProductForm" autocomplete="off">
+          <div class="columns is-flex is-flex-direction-column">
+            <app-text-input
+            [formControl]="$any(createProductForm.controls['name'])"
+            [label]="'name'"
+          ></app-text-input>
+            <app-text-input
+              [formControl]="$any(createProductForm.controls['description'])"
+              [label]="'description'"
+            ></app-text-input>
+            <app-text-input
+              [formControl]="$any(createProductForm.controls['price'])"
+              [label]="'price'"
+            ></app-text-input>
+            <div class="ml-3">
+              <app-dropdown-multi-select
+                [options]="categories"
+                [createOptions]="createCategoryOption"
+                [displayLabel]="'Select Category'"
+                (selectFn)="selectCategoryOptions($event)"
+              ></app-dropdown-multi-select>
+            </div>
+  
+            <div class="column">
+              <button class="button is-primary is-fullwidth" type="submit" (click)="submitForm()">
+                Create Product
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- <p>form value: {{ createProductForm.value | json }}</p> -->
