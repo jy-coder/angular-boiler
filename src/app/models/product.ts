@@ -3,6 +3,7 @@ import { Photo } from './photo';
 
 export interface Product {
   id: number;
+  name: string;
   description: string;
   price: number;
   created: string;

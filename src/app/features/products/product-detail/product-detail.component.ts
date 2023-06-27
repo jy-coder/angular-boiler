@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
@@ -14,7 +14,7 @@ import { CacheService } from 'src/app/services/cache.service';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css'],
 })
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnInit {
   model: any = {};
   product: Product | undefined;
   editProductForm: FormGroup = new FormGroup({});
@@ -41,6 +41,7 @@ export class ProductDetailComponent {
   initializeForm() {
     // set default value
     this.editProductForm = this.fb.group({
+      name: [this.product?.name, Validators.required],
       description: [this.product?.description, Validators.required],
       price: [this.product?.price, Validators.required],
       categoryIds: [this.selectedIds, Validators.required],

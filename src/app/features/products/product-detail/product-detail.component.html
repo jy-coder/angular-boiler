@@ -4,6 +4,11 @@
       <form [formGroup]="editProductForm" autocomplete="off">
         <div class="columns is-flex is-flex-direction-column">
           <app-text-input
+          [formControl]="$any(editProductForm.controls['name'])"
+          [label]="'name'"
+          [defaultValue]="product?.description"
+        ></app-text-input>
+          <app-text-input
             [formControl]="$any(editProductForm.controls['description'])"
             [label]="'description'"
             [defaultValue]="product?.description"

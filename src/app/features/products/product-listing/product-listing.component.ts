@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/models/category';
 import { Pagination } from 'src/app/models/pagination';
@@ -11,12 +11,13 @@ import { ProductsService } from 'src/app/services/product.service';
   templateUrl: './product-listing.component.html',
   styleUrls: ['./product-listing.component.css'],
 })
-export class ProductListingComponent {
+export class ProductListingComponent implements OnInit {
   products: Product[] | undefined;
   pagination: Pagination | undefined;
   productParams: ProductParams | undefined;
   productTableColumns: { key: string; type?: string }[] = [
     { key: 'id' },
+    { key: 'name' },
     { key: 'description' },
     { key: 'price' },
     { key: 'categories', type: 'tag' },
