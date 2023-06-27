@@ -4,6 +4,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { AuthUser } from 'src/app/models/user';
+import { Login } from 'src/app/models/login';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { AuthUser } from 'src/app/models/user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  model: any = {};
+  model: Login = { username: '', password: '' };
   currentUser$: Observable<AuthUser | null> = of(null);
 
   constructor(
@@ -26,18 +27,18 @@ export class LoginComponent implements OnInit {
 
   getCurrentUser() {
     this.accountService.currentUser$.subscribe({
-      next: (_: any) => {
+      next: () => {
         this.router.navigateByUrl('/users');
       },
-      error: (error: any) => this.toastr.error(error.error),
+      error: (error) => this.toastr.error(error.error),
     });
   }
   login() {
     this.accountService.login(this.model).subscribe({
-      next: (_: any) => {
+      next: () => {
         this.router.navigateByUrl('/users');
       },
-      error: (error: any) => this.toastr.error(error.error),
+      error: (error) => this.toastr.error(error.error),
     });
   }
 
