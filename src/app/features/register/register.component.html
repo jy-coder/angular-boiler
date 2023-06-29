@@ -1,6 +1,6 @@
 <div class="columns is-centered">
   <div class="column is-two-fifths is-justify-content-center is-align-items-center">
-    <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
+    <form [formGroup]="registerForm" (ngSubmit)="submitForm()" autocomplete="off">
       <div class="columns is-flex is-flex-direction-column box">
         <app-text-input
           [formControl]="$any(registerForm.controls['username'])"
@@ -29,6 +29,6 @@
     </form>
   </div>
 </div>
-<p>form value: {{ registerForm.value | json }}</p>
+<!-- <p>form value: {{ registerForm.value | json }}</p>
 <p>form status: {{ registerForm.status | json }}</p>
-<p>form error: {{ registerForm.errors | json }}</p>
+<p>form error: {{ registerForm.errors | json }}</p> -->

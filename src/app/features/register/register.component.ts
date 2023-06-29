@@ -1,12 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -16,14 +10,13 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  // @Output() cancelRegister = new EventEmitter();
-  model: any = {};
   registerForm: FormGroup = new FormGroup({});
 
   constructor(
     private accountService: AccountService,
     private toastr: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -47,10 +40,17 @@ export class RegisterComponent implements OnInit {
     };
   }
 
+  submitForm() {
+    if (this.registerForm.valid) {
+      this.register();
+    }
+  }
+
   register() {
-    this.accountService.register(this.model).subscribe({
+    this.accountService.register(this.registerForm.value).subscribe({
       next: () => {
-        this.toastr.success('Successfully register');
+        this.router.navigateByUrl('/login');
+        this.toastr.success('Please login again');
       },
       error: (error) => {
         this.toastr.error(error.error);
@@ -58,8 +58,4 @@ export class RegisterComponent implements OnInit {
       },
     });
   }
-
-  // cancel() {
-  //   this.cancelRegister.emit(false);
-  // }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Pagination } from 'src/app/models/pagination';
 import { User } from 'src/app/models/user';
 import { UserParams } from 'src/app/models/userParams';
@@ -9,7 +9,7 @@ import { UsersService } from '../../../services/users.service';
   templateUrl: './user-listing.component.html',
   styleUrls: ['./user-listing.component.css'],
 })
-export class UserListingComponent {
+export class UserListingComponent implements OnInit {
   users: User[] = [];
   pagination: Pagination | undefined;
   userTableColumns: { key: string; type?: string }[] = [
