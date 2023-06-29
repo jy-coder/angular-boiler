@@ -11,4 +11,5 @@ export interface User {
 export interface AuthUser {
   userName: string;
   token: string | null;
+  exp?: number;
 }

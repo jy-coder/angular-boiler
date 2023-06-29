@@ -4,7 +4,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { AuthUser } from 'src/app/models/user';
-import { Login } from 'src/app/models/login';
+import { Credential } from 'src/app/models/credential';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { Login } from 'src/app/models/login';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  model: Login = { username: '', password: '' };
+  model: Credential = { username: '', password: '' };
   currentUser$: Observable<AuthUser | null> = of(null);
 
   constructor(
@@ -41,9 +41,4 @@ export class LoginComponent implements OnInit {
       error: (error) => this.toastr.error(error.error),
     });
   }
-
-  // logout() {
-  //   this.accountService.logout();
-  //   this.router.navigateByUrl('/');
-  // }
 }

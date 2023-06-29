@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { AuthUser } from '../models/user';
 import { environment } from 'src/environments/environment.prod';
+import { Credential } from '../models/credential';
 
 @Injectable({
   providedIn: 'root',
@@ -13,26 +14,22 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
   constructor(private http: HttpClient) {}
 
-  login(model: any): Observable<any> {
+  login(model: Credential): Observable<void> {
     return this.http.post<AuthUser>(this.baseUrl + 'account/login', model).pipe(
       map((response: AuthUser) => {
         const user = response;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
+          const exp = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
+          localStorage.setItem('user', JSON.stringify({ ...user, exp }));
+
           this.currentUserSource.next(user);
         }
       })
     );
   }
 
-  register(model: any) {
-    return this.http.post<AuthUser>(this.baseUrl + 'account/register', model).pipe(
-      map((user) => {
-        if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-        }
-      })
-    );
+  register(model: Credential) {
+    return this.http.post<AuthUser>(this.baseUrl + 'account/register', model);
   }
 
   setCurrentUser(user: AuthUser) {
