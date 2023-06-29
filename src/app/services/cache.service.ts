@@ -40,6 +40,7 @@ export class CacheService implements OnDestroy {
   }
 
   clear(): void {
+    console.log('clear cache');
     this.cache.clear();
   }
 

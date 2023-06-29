@@ -6,6 +6,7 @@ import { PaginatedResult, Pagination } from '../models/pagination';
 import { getPaginatedResult, getPaginationHeaders } from '../utils/paginationHelper';
 import { UserParams } from '../models/userParams';
 import { environment } from 'src/environments/environment.prod';
+import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,20 +16,20 @@ export class UsersService {
   users: User[] = [];
   userParams: UserParams | undefined;
   paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
-  userCache = new Map();
+  private cacheKey = 'users';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cacheService: CacheService) {
     this.userParams = new UserParams();
   }
 
   getUsers(userParams: UserParams): Observable<PaginatedResult<User[]>> {
-    const response = this.userCache.get(Object.values(userParams).join('-'));
+    const response = this.cacheService.get(this.cacheKey + Object.values(userParams).join('-'));
     if (response) return of(response);
     let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
     params = params.append('orderBy', userParams.orderBy);
     return getPaginatedResult<User[]>(this.baseUrl + 'users', params, this.http).pipe(
       map((response) => {
-        this.userCache.set(Object.values(userParams).join('-'), response);
+        this.cacheService.set(this.cacheKey + Object.values(userParams).join('-'), response);
         return response;
       })
     );
