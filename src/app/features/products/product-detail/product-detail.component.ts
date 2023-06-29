@@ -42,10 +42,10 @@ export class ProductDetailComponent implements OnInit {
   initializeForm() {
     // set default value
     this.editProductForm = this.fb.group({
-      name: [this.product?.name, Validators.required, Validators.maxLength(30)],
-      description: [this.product?.description, Validators.required, Validators.maxLength(100)],
-      price: [this.product?.price, Validators.required, Validators.pattern(pricePattern)],
-      categoryIds: [this.selectedIds, Validators.required, numberArrayValidator],
+      name: [this.product?.name, [Validators.required, Validators.maxLength(30)]],
+      description: [this.product?.description, [Validators.required, Validators.maxLength(100)]],
+      price: [this.product?.price, [Validators.required, Validators.pattern(pricePattern)]],
+      categoryIds: [this.selectedIds, [Validators.required, numberArrayValidator]],
     });
   }
 
